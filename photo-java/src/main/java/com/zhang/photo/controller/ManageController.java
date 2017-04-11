@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.File;
+
 /**
  * Created by zhangsl on 2017/4/11.
  */
@@ -17,6 +19,12 @@ public class ManageController {
 
     @GetMapping(value = "update")
     public String update(){
+        File dir = new File(baseDir);
+        File[] files = dir.listFiles();
+        for (File file : files) {
+            System.out.println(file.getName());
+        }
         return baseDir;
     }
+
 }

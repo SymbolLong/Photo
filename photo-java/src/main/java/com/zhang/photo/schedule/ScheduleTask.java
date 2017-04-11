@@ -11,7 +11,7 @@ import java.util.Date;
 @Component
 public class ScheduleTask {
 
-    @Scheduled(cron = " 0/10 * * * * ? ")
+    @Scheduled(cron = " 0 0/30 * * * ? ")
     public void update(){
         System.out.println(new Date());
     }
