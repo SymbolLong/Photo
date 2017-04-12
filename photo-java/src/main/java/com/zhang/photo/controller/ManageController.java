@@ -26,15 +26,15 @@ public class ManageController {
 
     @GetMapping(value = "update")
     public String update(){
+        photoService.truncatePhoto();
         File dir = new File(baseDir);
         File[] files = dir.listFiles();
         for (File file : files) {
             Photo photo = new Photo();
             photo.setName(file.getName());
             photo.setUpdateTime(new Date());
-            //photoService.save(photo);
+            photoService.save(photo);
         }
-        photoService.truncatePhoto();
         return baseDir;
     }
 
