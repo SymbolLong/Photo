@@ -1,9 +1,13 @@
 package com.zhang.photo.schedule;
 
+import com.zhang.photo.service.PhotoService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
+import javax.annotation.Resource;
 
 /**
  * Created by zhangsl on 2017/4/11.
@@ -11,8 +15,17 @@ import java.util.Date;
 @Component
 public class ScheduleTask {
 
-    @Scheduled(cron = " 0 0/30 * * * ? ")
-    public void update(){
-        System.out.println(new Date());
+    private Logger logger = LoggerFactory.getLogger(ScheduleTask.class);
+
+    @Value("${photo.directory}")
+    private String baseDir;
+    @Resource
+    private PhotoService photoService;
+
+
+    @Scheduled(cron = " 0 0 0/1 * * ? ")
+    public void update() {
+        String result = photoService.updateDatabase(baseDir);
+        logger.info(result);
     }
 }
