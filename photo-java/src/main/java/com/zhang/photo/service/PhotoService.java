@@ -3,6 +3,7 @@ package com.zhang.photo.service;
 import com.zhang.photo.dao.PhotoDAO;
 import com.zhang.photo.dao.PhotoRepository;
 import com.zhang.photo.entity.Photo;
+import com.zhang.photo.util.CommonUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,13 +40,18 @@ public class PhotoService {
         truncatePhoto();
         File dir = new File(baseDir);
         File[] files = dir.listFiles();
+        int count = 0;
         for (File file : files) {
-            Photo photo = new Photo();
-            photo.setName(file.getName());
-            photo.setUpdateTime(new Date());
-            save(photo);
+            boolean isPicture = CommonUtil.isPicture(file.getName());
+            if (isPicture){
+                Photo photo = new Photo();
+                photo.setName(file.getName());
+                photo.setUpdateTime(new Date());
+                save(photo);
+                count++;
+            }
         }
         long end = System.currentTimeMillis();
-        return "共处理"+files.length+"个文件，耗时："+(end-start)+"毫秒";
+        return "共处理"+count+"个文件，耗时："+(end-start)+"毫秒";
     }
 }

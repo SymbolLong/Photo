@@ -2,6 +2,7 @@ package com.zhang.photo.controller;
 
 import com.zhang.photo.entity.Photo;
 import com.zhang.photo.service.PhotoService;
+import net.sf.json.JSONObject;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -33,7 +34,10 @@ public class ApiController {
             Photo photo = photoService.findById(id);
             if (photo == null){
                 response.setHeader("Content-type", "text/json;charset=UTF-8");
-                response.getWriter().write("资源不存在或已被删除");
+                JSONObject json = new JSONObject();
+                json.put("success",false);
+                json.put("msg","资源不存在或已被删除");
+                response.getWriter().write(json.toString());
                 return;
             }
             File file = new File(baseDir+"/"+photo.getName());
