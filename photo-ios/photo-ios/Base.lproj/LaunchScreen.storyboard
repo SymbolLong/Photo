@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -21,36 +21,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="圣  龙  工  作  室" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="OPH-7K-hz8">
-                                <rect key="frame" x="118" y="617" width="138" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="138" id="4eM-aK-9TK"/>
-                                </constraints>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="片" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0bP-Om-B7J">
-                                <rect key="frame" x="156" y="448" width="62" height="30"/>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="40"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="照" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9Fs-v2-NOy">
-                                <rect key="frame" x="156" y="160" width="62" height="30"/>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="40"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="fu" translatesAutoresizingMaskIntoConstraints="NO" id="3Sf-y6-hSB">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="9Fs-v2-NOy" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="2at-zG-pka"/>
-                            <constraint firstAttribute="bottom" secondItem="OPH-7K-hz8" secondAttribute="bottom" constant="20" symbolic="YES" id="72V-7q-4fa"/>
-                            <constraint firstItem="9Fs-v2-NOy" firstAttribute="leading" secondItem="0bP-Om-B7J" secondAttribute="leading" id="7va-Yd-leG"/>
-                            <constraint firstAttribute="bottom" secondItem="0bP-Om-B7J" secondAttribute="bottom" constant="189" id="YvO-vg-TsQ"/>
-                            <constraint firstItem="9Fs-v2-NOy" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="140" id="dDm-hG-GrJ"/>
-                            <constraint firstItem="0bP-Om-B7J" firstAttribute="centerX" secondItem="OPH-7K-hz8" secondAttribute="centerX" id="nr5-jz-aBJ"/>
+                            <constraint firstItem="3Sf-y6-hSB" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="1D5-oC-9mU"/>
+                            <constraint firstItem="3Sf-y6-hSB" firstAttribute="bottom" secondItem="xb3-aO-Qok" secondAttribute="top" id="D8w-Ne-s6l"/>
+                            <constraint firstAttribute="trailing" secondItem="3Sf-y6-hSB" secondAttribute="trailing" id="fZl-oJ-E3R"/>
+                            <constraint firstItem="3Sf-y6-hSB" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="toY-DI-kTa"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -59,4 +39,7 @@
             <point key="canvasLocation" x="52" y="374.66266866566718"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="fu" width="750" height="1334"/>
+    </resources>
 </document>
