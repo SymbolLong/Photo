@@ -25,14 +25,19 @@ class ViewController: UIViewController {
         //添加手势
         addGesture()
         //使用定时器
-        setTimer(interval: interval)
-        //初始化id
-        if id == 0 {
-            let loadURL = URL(string: host+"\(1)")!
-            downloadImage(manager: fileManager,path: "\(path)/timg-\(1)",url: loadURL)
-            sleep(3)
-            nextImage()
+        //setTimer(interval: interval)
+        //初始化图片
+        let name = "timg-\(id)"
+        if let data = NSData(contentsOfFile:"\(path)/\(name)"){
+            imageView.image = UIImage(data: data as Data)
+        } else {
+            imageView.image = UIImage(named: "fu")
         }
+        //加载下一张
+        let loadURL = URL(string: host+"\(id+1)")!
+        downloadImage(manager: fileManager,path: "\(path)/timg-\(id+1)",url: loadURL)
+        //给网络一点时间
+        sleep(3)
     }
     
     //隐藏状态栏
@@ -126,8 +131,15 @@ class ViewController: UIViewController {
         let task = session.dataTask(with: url, completionHandler: { (data, response, error) in
             if error != nil{
                 DispatchQueue.main.async(execute: {
-                    let alert = UIAlertController(title: "提示", message: "服务器维护中....", preferredStyle: UIAlertControllerStyle.alert)
-                    alert.addAction(UIAlertAction(title: "坐等恢复", style: UIAlertActionStyle.default, handler: nil))
+                    let alert = UIAlertController(title: "出错了", message: "服务器暂时不可用", preferredStyle: UIAlertControllerStyle.alert)
+                    let okAction = UIAlertAction(title: "去配置", style: .default, handler: { (action) in
+                        let controller = self.storyboard?.instantiateViewController(withIdentifier: "config")
+                        //let controller = ConfigViewController()
+                        self.present(controller!, animated: true,completion: nil)
+                    })
+                    let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+                    alert.addAction(cancelAction)
+                    alert.addAction(okAction)
                     self.present(alert, animated: true,completion: nil)
                 })
             }else{
