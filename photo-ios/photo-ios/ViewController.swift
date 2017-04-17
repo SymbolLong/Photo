@@ -14,7 +14,7 @@ class ViewController: UIViewController {
     let host = "http://localhost:8888/api/get?id="
     var timer: Timer?
     var interval: TimeInterval = 5
-    var id = UserDefaults.standard.integer(forKey: "id")
+    var id = 0
     var fileManager = FileManager()
     var path = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true)[0]
 
@@ -26,7 +26,21 @@ class ViewController: UIViewController {
         addGesture()
         //使用定时器
         //setTimer(interval: interval)
-        //初始化图片
+       
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        //初始化
+        initContent()
+    }
+    
+    //隐藏状态栏
+    override var prefersStatusBarHidden: Bool{
+        return true;
+    }
+    //初始化
+    func initContent(){
+        id = UserDefaults.standard.integer(forKey: Common.ID_KEY)
         let name = "timg-\(id)"
         if let data = NSData(contentsOfFile:"\(path)/\(name)"){
             imageView.image = UIImage(data: data as Data)
@@ -38,11 +52,6 @@ class ViewController: UIViewController {
         downloadImage(manager: fileManager,path: "\(path)/timg-\(id+1)",url: loadURL)
         //给网络一点时间
         sleep(3)
-    }
-    
-    //隐藏状态栏
-    override var prefersStatusBarHidden: Bool{
-        return true;
     }
     
     //添加手势

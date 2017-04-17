@@ -9,6 +9,8 @@
 import Foundation
 class Common{
     static let HOST_KEY = "host"
+    static let PORT_KEY = "port"
     static let ID_KEY = "id"
+    static let API_GET = "/api/get?id="
 }
 
