@@ -51,11 +51,36 @@ class ViewController: UIViewController {
         if let data = NSData(contentsOfFile:"\(path)/\(name)"){
             imageView.image = UIImage(data: data as Data)
         } else {
-            imageView.image = UIImage(named: "fu")
+            imageView.image = UIImage(named: "blue")
         }
         let loadURL = URL(string: requestAddress+"\(id+1)")!
         downloadImage(manager: fileManager,path: "\(path)/timg-\(id+1)",url: loadURL)//加载下一张
-        sleep(3)//给网络一点时间
+    }
+    
+    func preImage(){
+        id = id <= 0 ? 1 : id - 1
+        //print("preImage\(id)")
+        let name = "timg-\(id)"
+        if let data = NSData(contentsOfFile:"\(path)/\(name)"){
+            imageView.image = UIImage(data: data as Data)
+        }else{
+            imageView.image = UIImage(named: "blur")
+        }
+    }
+    
+    func nextImage(){
+        id += 1
+        //print("next\(id)")
+        let name = "timg-\(id)"
+        if let data = NSData(contentsOfFile:"\(path)/\(name)"){
+            imageView.image = UIImage(data: data as Data)
+        } else {
+            imageView.image = UIImage(named: "blur")
+            let loadURL = URL(string: requestAddress+"\(id)")!
+            downloadImage(manager: fileManager,path: "\(path)/timg-\(id)",url: loadURL)
+        }
+        let loadURL = URL(string: requestAddress+"\(id+1)")!
+        downloadImage(manager: fileManager,path: "\(path)/timg-\(id+1)",url: loadURL)
     }
     
     //添加手势
@@ -107,27 +132,6 @@ class ViewController: UIViewController {
         }
     }
     
-    func preImage(){
-        print("preImage\(id)")
-        id = id <= 0 ? 1 : id - 1
-        let name = "timg-\(id)"
-        let data = NSData(contentsOfFile:"\(path)/\(name)")!
-        imageView.image = UIImage(data: data as Data)
-    }
-    
-    func nextImage(){
-        print("next\(id)")
-        id += 1
-        let name = "timg-\(id)"
-        if let data = NSData(contentsOfFile:"\(path)/\(name)"){
-            imageView.image = UIImage(data: data as Data)
-        } else {
-            let nextId = id + 1;
-            let loadURL = URL(string: requestAddress+"\(nextId)")!
-            downloadImage(manager: fileManager,path: "\(path)/timg-\(nextId)",url: loadURL)
-        }
-    }
-    
     private func downloadImage(manager: FileManager,path: String,url: URL){
         // 使用网络请求异步加载data并保存
         let session = URLSession.shared
@@ -146,8 +150,9 @@ class ViewController: UIViewController {
                     self.present(alert, animated: true,completion: nil)
                 })
             }else{
-                //保存图片
-                manager.createFile(atPath: path, contents: data!, attributes: nil)
+                if !response!.mimeType!.contains("json"){
+                    manager.createFile(atPath: path, contents: data!, attributes: nil)//保存图片
+                }
             }
         })
         task.resume()
