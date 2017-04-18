@@ -11,7 +11,7 @@ import UIKit
 class ViewController: UIViewController {
     
     @IBOutlet weak var imageView: UIImageView!
-    let host = "http://localhost:8888/api/get?id="
+    var requestAddress = ""
     var timer: Timer?
     var interval: TimeInterval = 5
     var id = 0
@@ -20,55 +20,60 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        //屏幕保持常亮
-        UIApplication.shared.isIdleTimerDisabled = true
-        //添加手势
-        addGesture()
-        //使用定时器
-        //setTimer(interval: interval)
-       
+        UIApplication.shared.isIdleTimerDisabled = true//屏幕保持常亮
+        addGesture()//添加手势
+        //setTimer(interval: interval)//使用定时器
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        //初始化
+        super.viewWillAppear(animated)
         initContent()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        UserDefaults.standard.set(id, forKey: "id")
     }
     
     //隐藏状态栏
     override var prefersStatusBarHidden: Bool{
         return true;
     }
+    
     //初始化
     func initContent(){
         id = UserDefaults.standard.integer(forKey: Common.ID_KEY)
+        let host = UserDefaults.standard.string(forKey: Common.HOST_KEY)!
+        let port = UserDefaults.standard.string(forKey: Common.PORT_KEY)!
+        
+        requestAddress = "\(host):\(port)\(Common.API_GET)"
+        
         let name = "timg-\(id)"
         if let data = NSData(contentsOfFile:"\(path)/\(name)"){
             imageView.image = UIImage(data: data as Data)
         } else {
             imageView.image = UIImage(named: "fu")
         }
-        //加载下一张
-        let loadURL = URL(string: host+"\(id+1)")!
-        downloadImage(manager: fileManager,path: "\(path)/timg-\(id+1)",url: loadURL)
-        //给网络一点时间
-        sleep(3)
+        let loadURL = URL(string: requestAddress+"\(id+1)")!
+        downloadImage(manager: fileManager,path: "\(path)/timg-\(id+1)",url: loadURL)//加载下一张
+        sleep(3)//给网络一点时间
     }
     
     //添加手势
     func addGesture(){
-        //上下左右
+        //上
         let faster = UISwipeGestureRecognizer(target: self, action: #selector(self.swipeGesture(sender:)))
         faster.direction = .up
         self.view.addGestureRecognizer(faster)
-        
+        //下
         let slower = UISwipeGestureRecognizer(target: self, action: #selector(self.swipeGesture(sender:)))
         slower.direction = .down
         self.view.addGestureRecognizer(slower)
-        
+        //左
         let pre = UISwipeGestureRecognizer(target: self, action: #selector(self.swipeGesture(sender:)))
         pre.direction = .right
         self.view.addGestureRecognizer(pre)
-        
+        //右
         let next = UISwipeGestureRecognizer(target: self, action: #selector(self.swipeGesture(sender:)))
         next.direction = .left
         self.view.addGestureRecognizer(next)
@@ -78,16 +83,10 @@ class ViewController: UIViewController {
     func swipeGesture(sender: UISwipeGestureRecognizer){
         switch sender.direction {
         case UISwipeGestureRecognizerDirection.up:
-            interval -= 1
-            if interval < 1 {
-                interval = 1
-            }
+            interval = interval - 1 < 1 ? 1 : interval - 1
             setTimer(interval: interval)
         case UISwipeGestureRecognizerDirection.down:
-            interval += 1
-            if interval > 10 {
-                interval = 10
-            }
+            interval = interval + 1 > 10 ? 10 : interval + 1
             setTimer(interval: interval)
         case UISwipeGestureRecognizerDirection.left:
             setTimer(interval: 0)
@@ -96,7 +95,7 @@ class ViewController: UIViewController {
             setTimer(interval: 0)
             preImage()
         default:
-            print("error")
+            print("error,theoretically no code will access here")
         }
     }
     
@@ -111,10 +110,7 @@ class ViewController: UIViewController {
     
     func preImage(){
         print("preImage\(id)")
-        id -= 1
-        if id <= 0 {
-            id = 1
-        }
+        id = id <= 0 ? 1 : id - 1
         let name = "timg-\(id)"
         let data = NSData(contentsOfFile:"\(path)/\(name)")!
         imageView.image = UIImage(data: data as Data)
@@ -128,10 +124,9 @@ class ViewController: UIViewController {
             imageView.image = UIImage(data: data as Data)
         } else {
             let nextId = id + 1;
-            let loadURL = URL(string: host+"\(nextId)")!
+            let loadURL = URL(string: requestAddress+"\(nextId)")!
             downloadImage(manager: fileManager,path: "\(path)/timg-\(nextId)",url: loadURL)
         }
-        UserDefaults.standard.set(id, forKey: "id")
     }
     
     private func downloadImage(manager: FileManager,path: String,url: URL){
