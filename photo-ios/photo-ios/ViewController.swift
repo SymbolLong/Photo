@@ -43,9 +43,8 @@ class ViewController: UIViewController {
     //初始化
     func initContent(){
         id = UserDefaults.standard.integer(forKey: Common.ID_KEY)
-        let host = UserDefaults.standard.string(forKey: Common.HOST_KEY)!
-        let port = UserDefaults.standard.string(forKey: Common.PORT_KEY)!
-        
+        let host = UserDefaults.standard.string(forKey: Common.HOST_KEY) ?? "http://localhost"
+        let port = UserDefaults.standard.string(forKey: Common.PORT_KEY) ?? "8888"
         requestAddress = "\(host):\(port)\(Common.API_GET)"
         
         let name = "timg-\(id)"
