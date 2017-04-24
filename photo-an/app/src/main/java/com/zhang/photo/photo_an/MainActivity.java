@@ -34,14 +34,14 @@ public class MainActivity extends Activity {
             //当手指离开的时候
             x2 = event.getX();
             y2 = event.getY();
-            if(y1 - y2 > 50) {
-                Toast.makeText(MainActivity.this, "向上滑", Toast.LENGTH_SHORT).show();
-            } else if(y2 - y1 > 50) {
-                Toast.makeText(MainActivity.this, "向下滑", Toast.LENGTH_SHORT).show();
-            } else if(x1 - x2 > 50) {
+            if(x1 - x2 > 50) {
                 Toast.makeText(MainActivity.this, "向左滑", Toast.LENGTH_SHORT).show();
             } else if(x2 - x1 > 50) {
                 Toast.makeText(MainActivity.this, "向右滑", Toast.LENGTH_SHORT).show();
+            }else if(y1 - y2 > 50) {
+                Toast.makeText(MainActivity.this, "向上滑", Toast.LENGTH_SHORT).show();
+            } else if(y2 - y1 > 50) {
+                Toast.makeText(MainActivity.this, "向下滑", Toast.LENGTH_SHORT).show();
             }
         }
         return super.onTouchEvent(event);
