@@ -2,11 +2,69 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:background="@drawable/blur">
 	
-	<ImageView android:layout_width="match_parent"
-	           android:layout_height="match_parent"
-	           android:src="@drawable/blur"
-	/>
+	<TextView android:layout_width="wrap_content"
+	          android:layout_height="wrap_content"
+	          android:textSize="50px"
+	          android:layout_marginTop="@dimen/activity_vertical_margin"
+	          android:layout_gravity="center_horizontal"
+	          android:text="服务器配置"/>
+	
+	<LinearLayout android:layout_width="match_parent"
+	              android:layout_height="wrap_content"
+	              android:orientation="horizontal">
+		<TextView android:layout_width="wrap_content"
+		          android:layout_height="wrap_content"
+		          android:textSize="30px"
+		          android:text="主机："/>
+		<EditText android:id="@+id/host"
+		          android:layout_width="match_parent"
+		          android:layout_height="wrap_content"
+		          android:hint="请输入主机地址"
+		          android:inputType="textUri"/>
+	</LinearLayout>
+	
+	<LinearLayout android:layout_width="match_parent"
+	              android:layout_height="wrap_content"
+	              android:orientation="horizontal">
+		<TextView android:layout_width="wrap_content"
+		          android:layout_height="wrap_content"
+		          android:textSize="30px"
+		          android:text="端口："/>
+		<EditText android:id="@+id/port"
+		          android:layout_width="match_parent"
+		          android:layout_height="wrap_content"
+		          android:hint="请输入端口号"
+		          android:inputType="number"/>
+	</LinearLayout>
+	
+	<LinearLayout android:layout_width="match_parent"
+	              android:layout_height="wrap_content"
+	              android:orientation="horizontal">
+		<TextView android:layout_width="wrap_content"
+		          android:layout_height="wrap_content"
+		          android:textSize="30px"
+		          android:text="   ID ： "/>
+		<EditText android:id="@+id/imageID"
+		          android:layout_width="match_parent"
+		          android:layout_height="wrap_content"
+		          android:hint="请输入ID"
+		          android:inputType="number"/>
+	</LinearLayout>
+	
+	<LinearLayout android:layout_width="wrap_content"
+	              android:layout_height="wrap_content"
+	              android:orientation="horizontal"
+	              android:layout_gravity="right">
+		<Button android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_marginTop="100px"
+		        android:text="确认"
+		        android:onClick="confirm"
+		        android:textSize="30px"/>
+	</LinearLayout>
+
 
 </LinearLayout>

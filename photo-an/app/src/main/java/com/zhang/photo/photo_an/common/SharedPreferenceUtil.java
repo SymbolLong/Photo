@@ -32,6 +32,7 @@ public class SharedPreferenceUtil {
     }
 
     public static int getID(Context context){
+
         return context.getSharedPreferences(Common.SPNAME,MODE_PRIVATE).getInt(Common.ID,1);
     }
 

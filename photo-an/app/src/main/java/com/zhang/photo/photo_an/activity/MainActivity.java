@@ -12,7 +12,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.MotionEvent;
 import android.widget.ImageView;
-import android.widget.Toast;
 import com.zhang.photo.photo_an.R;
 import com.zhang.photo.photo_an.common.Common;
 import com.zhang.photo.photo_an.common.SharedPreferenceUtil;
@@ -23,6 +22,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends Activity {
 
@@ -38,6 +39,9 @@ public class MainActivity extends Activity {
     private String port = "8888";
     private int id = 1;
     private String path = host + ":" + port + Common.API_GET + id;
+
+    private long timerSecond = 1;
+    private Timer timer ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,13 +74,21 @@ public class MainActivity extends Activity {
             x2 = event.getX();
             y2 = event.getY();
             if (x1 - x2 > 50) {
-                imgView.setImageResource(R.drawable.blur);
+                nextImage();
             } else if (x2 - x1 > 50) {
-                imgView.setImageResource(R.drawable.green);
+                preImage();
             } else if (y1 - y2 > 50) {
-                Toast.makeText(MainActivity.this, "向上滑", Toast.LENGTH_SHORT).show();
+                timerSecond++;
+                if (timerSecond > 10){
+                    timerSecond = 10;
+                }
+                setTimer(timerSecond);
             } else if (y2 - y1 > 50) {
-                Toast.makeText(MainActivity.this, "向下滑", Toast.LENGTH_SHORT).show();
+                timerSecond--;
+                if (timerSecond < 1){
+                    timerSecond = 1;
+                }
+                setTimer(timerSecond);
             }
         }
         return super.onTouchEvent(event);
@@ -97,6 +109,7 @@ public class MainActivity extends Activity {
     public void nextImage() {
         id++;
         chageImage();
+        SharedPreferenceUtil.setID(this,id);
         downloadImage(path,id+1);
     }
 
@@ -111,6 +124,25 @@ public class MainActivity extends Activity {
         } else {
             imgView.setImageResource(R.drawable.blur);
         }
+    }
+
+    private void setTimer(long sec){
+        if (timer == null){
+            timer = new Timer(true);
+        }
+        if ( sec == 0){
+            timer.cancel();
+            timer = null;
+            return;
+        }
+
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                System.out.println(System.currentTimeMillis());
+            }
+        },0,1000 * sec);
+
     }
 
 
