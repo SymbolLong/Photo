@@ -11,35 +11,34 @@ import static android.content.Context.MODE_PRIVATE;
 public class SharedPreferenceUtil {
 
     public static String getHost(Context context){
-        return context.getSharedPreferences(Common.SPNAME,MODE_PRIVATE).getString(Common.HOST,Common.DEFAULT_HOST);
+        return context.getSharedPreferences(Config.SPNAME,MODE_PRIVATE).getString(Config.HOST, Config.DEFAULT_HOST);
     }
 
     public static void setHost(Context context,String value){
-        SharedPreferences  sp = context.getSharedPreferences(Common.SPNAME,MODE_PRIVATE);
+        SharedPreferences  sp = context.getSharedPreferences(Config.SPNAME,MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
-        editor.putString(Common.HOST,value);
+        editor.putString(Config.HOST,value);
         editor.commit();
     }
     public static String getPort(Context context){
-        return context.getSharedPreferences(Common.SPNAME,MODE_PRIVATE).getString(Common.PORT,Common.DEFAULT_PORT);
+        return context.getSharedPreferences(Config.SPNAME,MODE_PRIVATE).getString(Config.PORT, Config.DEFAULT_PORT);
     }
 
     public static void setPort(Context context,String value){
-        SharedPreferences  sp = context.getSharedPreferences(Common.SPNAME,MODE_PRIVATE);
+        SharedPreferences  sp = context.getSharedPreferences(Config.SPNAME,MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
-        editor.putString(Common.PORT,value);
+        editor.putString(Config.PORT,value);
         editor.commit();
     }
 
     public static int getID(Context context){
-
-        return context.getSharedPreferences(Common.SPNAME,MODE_PRIVATE).getInt(Common.ID,1);
+        return context.getSharedPreferences(Config.SPNAME,MODE_PRIVATE).getInt(Config.ID,1);
     }
 
     public static void setID(Context context,int value){
-        SharedPreferences  sp = context.getSharedPreferences(Common.SPNAME,MODE_PRIVATE);
+        SharedPreferences  sp = context.getSharedPreferences(Config.SPNAME,MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
-        editor.putInt(Common.ID,value);
+        editor.putInt(Config.ID,value);
         editor.commit();
     }
 
