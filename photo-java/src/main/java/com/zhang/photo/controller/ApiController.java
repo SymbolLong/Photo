@@ -40,6 +40,7 @@ public class ApiController {
                 response.getWriter().write(json.toString());
                 return;
             }
+            response.setHeader("Content-type", "image/*");
             File file = new File(baseDir+"/"+photo.getName());
             FileInputStream inputStream = new FileInputStream(file);
             byte[] data = IOUtils.toByteArray(inputStream);

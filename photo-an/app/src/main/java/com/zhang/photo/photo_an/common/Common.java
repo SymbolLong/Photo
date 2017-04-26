@@ -12,6 +12,7 @@ public class Common {
     public static final String API_GET = "/api/get?id=";
 
     public static final int DOWNLOAD_ERROR = 0;
+    public static final int DOWNLOAD_NOT_EXIST = 1;
 
     public static final String DEFAULT_HOST = "http://localhost";
     public static final String DEFAULT_PORT = "8888";
