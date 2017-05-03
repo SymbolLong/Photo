@@ -49,9 +49,9 @@ class ViewController: UIViewController {
         
         let name = "timg-\(id)"
         if let data = NSData(contentsOfFile:"\(path)/\(name)"){
-            imageView.image = UIImage(data: data as Data)
+            changeImage(image: UIImage(data: data as Data)!)
         } else {
-            imageView.image = UIImage(named: "blue")
+            changeImage(image: UIImage(named: "blue")!)
         }
         let loadURL = URL(string: requestAddress+"\(id+1)")!
         downloadImage(manager: fileManager,path: "\(path)/timg-\(id+1)",url: loadURL)//加载下一张
@@ -62,9 +62,9 @@ class ViewController: UIViewController {
         //print("preImage\(id)")
         let name = "timg-\(id)"
         if let data = NSData(contentsOfFile:"\(path)/\(name)"){
-            imageView.image = UIImage(data: data as Data)
+            changeImage(image: UIImage(data: data as Data)!)
         }else{
-            imageView.image = UIImage(named: "blur")
+            changeImage(image: UIImage(named: "blur")!)
         }
     }
     
@@ -73,14 +73,25 @@ class ViewController: UIViewController {
         //print("next\(id)")
         let name = "timg-\(id)"
         if let data = NSData(contentsOfFile:"\(path)/\(name)"){
-            imageView.image = UIImage(data: data as Data)
+            changeImage(image: UIImage(data: data as Data)!)
         } else {
-            imageView.image = UIImage(named: "blur")
+            changeImage(image: UIImage(named: "blur")!)
             let loadURL = URL(string: requestAddress+"\(id)")!
             downloadImage(manager: fileManager,path: "\(path)/timg-\(id)",url: loadURL)
         }
         let loadURL = URL(string: requestAddress+"\(id+1)")!
         downloadImage(manager: fileManager,path: "\(path)/timg-\(id+1)",url: loadURL)
+    }
+    
+    func changeImage(image: UIImage){
+        let width = image.size.width
+        let height = image.size.height
+        if(width > height && UIDevice.current.orientation.isPortrait){
+            UIDevice.current.setValue(UIInterfaceOrientation.landscapeLeft.rawValue, forKey: "orientation")
+        }else if(height > width && UIDevice.current.orientation.isLandscape){
+           UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
+        }
+        imageView.image = image
     }
     
     //添加手势
